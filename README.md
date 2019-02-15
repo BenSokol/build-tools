@@ -11,14 +11,16 @@ Where MAKEFILE_DIR_LOCATION matches the path to this directory. The above path i
 ## Rules
 The following list does NOT include rules used only during the build process.
 
-| Rule    | Description                                                  |
-| ------- | ------------------------------------------------------------ |
-| clean   | Deletes build related files                                  |
-| debug   | Same as run, except EXE is run within DEBUGGER               |
-| memtest | Same as run, except EXE is run within a valgrind leak-check. |
-| run     | Compiles then runs EXE passing COMMAND_LINE_ARGS to EXE      |
-| tar     | Runs clean then creates a tgz archive of the entire project folder. The tgz file will be located 1 directory above the project root. |
-| var     | Used for debugging the Makefile. Prints important variables to terminal and exits. |
+| Rule      | Description                                                  |
+| --------- | ------------------------------------------------------------ |
+| clean     | Deletes build related files                                  |
+| debug     | Same as run, except EXE is run within DEBUGGER               |
+| memtest   | Same as run, except EXE is run within a valgrind leak-check. |
+| run       | Compiles then runs EXE passing COMMAND_LINE_ARGS to EXE      |
+| tar       | Runs clean then creates a tgz archive of the entire project folder. The tgz file will be located 1 directory above the project root. |
+| var       | Used for debugging the Makefile. Prints important variables to terminal and exits. |
+| install   | Used to install project binary in ~/$(INSTALL_LOCATION). Also installs manpage if man page exists. |
+| uninstall | Used to uninstall project binary. Also removes manpage.      |
 
 ## Optional Settings
 If you would like to customize settings available, create a file named **Makefile-Settings.mk** located at the project root. The following options are available:
@@ -43,6 +45,7 @@ If you would like to customize settings available, create a file named **Makefil
 | INC           |               | Any include directories to pass to CC or CXX. Use -IDirectoryPath |
 | COMMAND_LINE_ARGS |           | Arguments to pass to executable when using rules: run, memtest, and debug. |
 | PREBUILD      |               | Any rules to run before the executable is built |
+| INSTALL_LOCATION | ~/.bin     | Location to install to. NOTE: Location must be owned by user or group user is in. |
 <a name="reference-1">1.</a> On macOS, the default is lldb.
 <a name="reference-2">2.</a> Checks if Linux using uname. uname must return "Linux"
 <a name="reference-3">3.</a> Checks if macOS usign uname. uname must return "Darwin"

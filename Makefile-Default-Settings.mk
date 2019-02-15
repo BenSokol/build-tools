@@ -2,7 +2,7 @@
 # @Author:   Ben Sokol <Ben>
 # @Email:    ben@bensokol.com
 # @Created:  February 14th, 2019 [5:26pm]
-# @Modified: February 14th, 2019 [6:06pm]
+# @Modified: February 14th, 2019 [9:56pm]
 # @Version:  1.0.0
 #
 # Copyright (C 2019 by Ben Sokol. All Rights Reserved.
@@ -49,4 +49,8 @@ endif
 
 ifndef CC
 CC := gcc
+endif
+
+ifndef INSTALL_LOCATION
+INSTALL_LOCATION := ${HOME}/.bin
 endif

@@ -33,3 +33,8 @@
 
 ## v4.0
 * Split into seperate folders by rules
+
+## v4.1
+* Add install and uninstall rules
+* Add aditional debug info to var rule
+* Add INSTALL_LOCATION setting

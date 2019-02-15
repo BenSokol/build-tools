@@ -2,7 +2,7 @@
 # @Author:   Ben Sokol
 # @Email:    ben@bensokol.com
 # @Created:  October 25th, 2018 [7:15pm]
-# @Modified: February 14th, 2019 [6:20pm]
+# @Modified: February 14th, 2019 [10:05pm]
 # @Version:  3.0.0
 #
 # Copyright (C) 2018-2019 by Ben Sokol. All Rights Reserved.
@@ -86,7 +86,8 @@ include $(MAKEFILE_DIR_LOCATION)/make-rules/wildcard/cpp.mk
 -include $(MAKEFILE_DIR_LOCATION)/make-rules/run.mk
 -include $(MAKEFILE_DIR_LOCATION)/make-rules/tar.mk
 -include $(MAKEFILE_DIR_LOCATION)/make-rules/var.mk
-
+-include $(MAKEFILE_DIR_LOCATION)/make-rules/install.mk
+-include $(MAKEFILE_DIR_LOCATION)/make-rules/uninstall.mk
 
 ###############################################################################
 # Makefile .pre_build Rules                                                   #
