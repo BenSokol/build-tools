@@ -2,7 +2,7 @@
 # @Author:   Ben Sokol
 # @Email:    ben@bensokol.com
 # @Created:  October 25th, 2018 [7:15pm]
-# @Modified: February 14th, 2019 [10:05pm]
+# @Modified: February 15th, 2019 [1:11pm]
 # @Version:  3.0.0
 #
 # Copyright (C) 2018-2019 by Ben Sokol. All Rights Reserved.
@@ -50,7 +50,7 @@ $(error $(shell echo "\033[31m")ERROR$(shell echo "\033[39m"): Unknown Operating
 endif
 
 # Set include paths, allows inclusion of filenames without paths
-INC += $(strip $(addprefix -I, $(shell find $(SRCDIR) -type d -not -path "*.git*" -print)) $(addprefix -I, $(shell find $(SUBDIR) -type d -not -path "*.git*" -not -path "$(MAKEFILE_DIR_LOCATION)*" -print)))
+INC += $(strip $(addprefix -I, $(shell find $(SRCDIR) $(SUBDIR) -type d -not -path "*.git*" -not -path "$(MAKEFILE_DIR_LOCATION)*" -print)))
 
 CFLAGS   := $(strip $(CSTD) $(CFLAGS) $(WARNING_FLAGS) $(INC))
 CXXFLAGS := $(strip $(CXXSTD) $(CXXFLAGS) $(WARNING_FLAGS) $(INC))

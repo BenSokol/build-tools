@@ -2,7 +2,7 @@
 # @Author:   Ben Sokol <Ben>
 # @Email:    ben@bensokol.com
 # @Created:  February 14th, 2019 [5:02pm]
-# @Modified: February 14th, 2019 [5:30pm]
+# @Modified: February 15th, 2019 [1:09pm]
 # @Version:  1.0.0
 #
 # Copyright (C) 2019 by Ben Sokol. All Rights Reserved.
@@ -13,6 +13,7 @@
 
 # Generate folder structure for specified folders (Normally deps/ and obj/)
 %/.pre_build:
-	@mkdir -p $(shell dirname $@) && mkdir -p $(shell dirname $@)/$(SRCDIR) && rsync -aq --exclude '*.git*' -f"+ */" -f"- *" $(SRCDIR)/ $(shell dirname $@)/$(SRCDIR) && mkdir -p $(shell dirname $@)/$(SUBDIR) && rsync -aq --exclude '*.git*' -f"+ */" -f"- *" $(SUBDIR)/ $(shell dirname $@)/$(SUBDIR)/
+	@mkdir -p $(strip $(addprefix $(shell dirname $@)/, $(shell find $(SRCDIR) -type d -not -path "*.git*" -print)))
+	@mkdir -p $(strip $(addprefix $(shell dirname $@)/, $(shell find $(SUBDIR) -type d -not -path "*.git*" -not -path "$(MAKEFILE_DIR_LOCATION)*" -print)))
 	@printf "[%02d/%02d] Created $(shell dirname $@) folder structure\n" `expr $(CURRENT_STEP)` $(TOTAL_STEPS) #$(ECHOCOUNT)
 	@touch $@
