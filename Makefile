@@ -2,8 +2,8 @@
 # @Author:   Ben Sokol
 # @Email:    ben@bensokol.com
 # @Created:  October 25th, 2018 [7:15pm]
-# @Modified: February 15th, 2019 [1:11pm]
-# @Version:  3.0.0
+# @Modified: February 16th, 2019 [10:14pm]
+# @Version:  5.0.0
 #
 # Copyright (C) 2018-2019 by Ben Sokol. All Rights Reserved.
 
@@ -30,14 +30,27 @@ endif
 # Makefile Settings                                                           #
 ###############################################################################
 
-include ./Makefile-Settings.mk
+-include ./Makefile-Settings.mk
 include $(MAKEFILE_DIR_LOCATION)/Makefile-Default-Settings.mk
 
 
 ###############################################################################
 # Makefile Build Script                                                       #
 ###############################################################################
+MAKEFILE_FILES = $(strip Makefile $(wildcard Makefile-Settings.mk) $(MAKEFILE_DIR_LOCATION)/Makefile $(shell find $(MAKEFILE_DIR_LOCATION) -type f -name '*.mk'))
+
 -include $(shell find $(DEPDIR) -type f -name '*.d' >/dev/null 2>/dev/null)
+
+# Initalize WARNING_FLAGS based on compiler (clang vs gcc)
+COMPILER_HELP := $(shell $(CXX) --help | head -n 1)
+ifneq (,$(findstring clang,$(COMPILER_HELP)))
+WARNING_FLAGS := $(strip $(WARNING_FLAGS) $(WARNING_FLAGS_CLANG))
+else ifneq (,$(findstring g++,$(COMPILER_HELP)))
+WARNING_FLAGS := $(strip $(WARNING_FLAGS) $(WARNING_FLAGS_GCC))
+else
+$(error $(shell echo "\033[31m")ERROR$(shell echo "\033[39m"): Unknown Compiler. Supported compilers: g++, clang)
+endif
+
 
 # Disable compiler specific warnings (unable to fix because they are caused by flex/bison generated files)
 ifeq ($(shell uname),Darwin)

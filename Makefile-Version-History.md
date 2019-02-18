@@ -19,7 +19,7 @@
 ## v2.0
 * Add var rule
 * Add support for dependency files
-* Change location of object and dependency files to paths specified in settings.
+* Change location of object and dependency files to paths specified in settings
 * Change output format to include progress
 * Add support for pre-build targets
 
@@ -38,3 +38,9 @@
 * Add install and uninstall rules
 * Add aditional debug info to var rule
 * Add INSTALL_LOCATION setting
+
+## v5.0
+* Add support for clang/gcc specific warning flags
+* CHange clean so $(EXE).dSYM is deleted if it exists
+* Check if any files used by make have changed since last build. If any have, rebuild project.
+* Add ability to disable rules by defining specified variable

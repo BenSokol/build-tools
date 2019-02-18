@@ -2,13 +2,13 @@
 # @Author:   Ben Sokol <Ben>
 # @Email:    ben@bensokol.com
 # @Created:  February 14th, 2019 [5:02pm]
-# @Modified: February 15th, 2019 [1:09pm]
-# @Version:  1.0.0
+# @Modified: February 16th, 2019 [7:32pm]
+# @Version:  1.1.0
 #
 # Copyright (C) 2019 by Ben Sokol. All Rights Reserved.
 
 # Pre-Build Start
-.pre_build: Makefile $(DEPDIR)/.pre_build $(OBJDIR)/.pre_build $(PREBUILD)
+.pre_build: $(MAKEFILE_FILES) $(DEPDIR)/.pre_build $(OBJDIR)/.pre_build $(PREBUILD)
 	@touch .pre_build
 
 # Generate folder structure for specified folders (Normally deps/ and obj/)
