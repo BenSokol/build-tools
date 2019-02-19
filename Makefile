@@ -2,7 +2,7 @@
 # @Author:   Ben Sokol
 # @Email:    ben@bensokol.com
 # @Created:  October 25th, 2018 [7:15pm]
-# @Modified: February 18th, 2019 [7:59pm]
+# @Modified: February 18th, 2019 [9:34pm]
 # @Version:  5.0.0
 #
 # Copyright (C) 2018-2019 by Ben Sokol. All Rights Reserved.
@@ -45,10 +45,10 @@ MAKEFILE_FILES = $(strip Makefile $(wildcard Makefile-Settings.mk) $(MAKEFILE_DI
 COMPILER_HELP := $(shell $(CXX) --help | head -n 1)
 ifneq (,$(findstring clang,$(COMPILER_HELP)))
 WARNING_FLAGS := $(strip $(WARNING_FLAGS) $(WARNING_FLAGS_CLANG))
-else ifneq (,$(findstring g++,$(COMPILER_HELP)))
+else ifneq (,$(findstring g++,$(patsubst %g++%,g++,$(COMPILER_HELP))))
 WARNING_FLAGS := $(strip $(WARNING_FLAGS) $(WARNING_FLAGS_GCC))
 else
-$(error $(shell echo "\033[31m")ERROR$(shell echo "\033[39m"): Unknown Compiler. Supported compilers: g++, clang)
+$(warning $(shell echo "\033[35m")WARNING$(shell echo "\033[39m"): Unknown Compiler. Supported compilers: g++, clang.)
 endif
 
 
@@ -59,7 +59,7 @@ DEBUGGER = lldb # macos doesnt have gdb, so must use lldb
 else ifeq ($(shell uname),Linux)
 WARNING_FLAGS += $(LINUX_FLAGS)
 else
-$(error $(shell echo "\033[31m")ERROR$(shell echo "\033[39m"): Unknown Operating System '$(shell uname)')
+$(warning $(shell echo "\033[35m")WARNING$(shell echo "\033[39m"): Unknown Operating System '$(shell uname)'.)
 endif
 
 # Set include paths, allows inclusion of filenames without paths
