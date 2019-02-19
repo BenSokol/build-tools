@@ -44,3 +44,6 @@
 * CHange clean so $(EXE).dSYM is deleted if it exists
 * Check if any files used by make have changed since last build. If any have, rebuild project.
 * Add ability to disable rules by defining specified variable
+
+## 5.1
+* Add cppcheck rule

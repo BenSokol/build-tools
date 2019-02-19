@@ -17,6 +17,7 @@ The following list does NOT include rules used only during the build process.
 | Rule      | Description                                                  |
 | --------- | ------------------------------------------------------------ |
 | clean     | Deletes build related files                                  |
+| cppcheck  | Runs all source code through cppcheck                        |
 | debug     | Same as run, except EXE is run within DEBUGGER               |
 | memtest   | Same as run, except EXE is run within a valgrind leak-check. |
 | run       | Compiles then runs EXE passing COMMAND_LINE_ARGS to EXE      |
@@ -66,6 +67,7 @@ The following rules can be disabled by defining the variable listed IN **Makefil
 | Rule      | Variable to disable             |
 | --------- | ------------------------------- |
 | clean     | MAKEFILE_RULE_CLEAN_DISABLE     |
+| cppcheck  | MAKEFILE_RULE_CPPCHECK_DISABLE  |
 | debug     | MAKEFILE_RULE_DEBUG_DISABLE     |
 | memtest   | MAKEFILE_RULE_MEMTEST_DISABLE   |
 | run       | MAKEFILE_RULE_RUN_DISABLE       |
