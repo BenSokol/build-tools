@@ -2,13 +2,13 @@
 # @Author:   Ben Sokol
 # @Email:    ben@bensokol.com
 # @Created:  October 25th, 2018 [7:15pm]
-# @Modified: February 18th, 2019 [9:34pm]
+# @Modified: February 21st, 2019 [3:14am]
 # @Version:  5.0.0
 #
 # Copyright (C) 2018-2019 by Ben Sokol. All Rights Reserved.
 
 ifndef MAKEFILE_DIR_LOCATION
-$(error MAKEFILE_DIR_LOCATION is not defined.)
+$(error MAKEFILE_DIR_LOCATION is not defined. For help, see README.md)
 endif
 
 ###############################################################################
@@ -33,13 +33,17 @@ endif
 -include ./Makefile-Settings.mk
 include $(MAKEFILE_DIR_LOCATION)/Makefile-Default-Settings.mk
 
+ifndef ECHOCOUNT
+ifeq ($(ENABLE_LOGGING),1)
+$(shell printf "$(shell date) - make $(MAKECMDGOALS)\n" >> $(LOG_FILE))
+endif
+endif
 
 ###############################################################################
 # Makefile Build Script                                                       #
 ###############################################################################
-MAKEFILE_FILES = $(strip Makefile $(wildcard Makefile-Settings.mk) $(MAKEFILE_DIR_LOCATION)/Makefile $(shell find $(MAKEFILE_DIR_LOCATION) -type f -name '*.mk'))
-
--include $(shell find $(DEPDIR) -type f -name '*.d' >/dev/null 2>/dev/null)
+MAKEFILE_FILES=$(strip Makefile Makefile-Settings.mk $(MAKEFILE_DIR_LOCATION)/Makefile $(shell find $(MAKEFILE_DIR_LOCATION) -type f -name '*.mk'))
+-include $(shell find $(DEPDIR) -type f -name '*.d' 2> /dev/null)
 
 # Initalize WARNING_FLAGS based on compiler (clang vs gcc)
 COMPILER_HELP := $(shell $(CXX) --help | head -n 1)
@@ -50,7 +54,6 @@ WARNING_FLAGS := $(strip $(WARNING_FLAGS) $(WARNING_FLAGS_GCC))
 else
 $(warning $(shell echo "\033[35m")WARNING$(shell echo "\033[39m"): Unknown Compiler. Supported compilers: g++, clang.)
 endif
-
 
 # Disable compiler specific warnings (unable to fix because they are caused by flex/bison generated files)
 ifeq ($(shell uname),Darwin)
@@ -88,25 +91,12 @@ include $(MAKEFILE_DIR_LOCATION)/make-rules/build.mk
 include $(MAKEFILE_DIR_LOCATION)/make-rules/link.mk
 include $(MAKEFILE_DIR_LOCATION)/make-rules/wildcard/c.mk
 include $(MAKEFILE_DIR_LOCATION)/make-rules/wildcard/cpp.mk
-
+include $(MAKEFILE_DIR_LOCATION)/make-rules/pre-build.mk
 
 ###############################################################################
 # Makefile Other Rules                                                        #
 ###############################################################################
--include $(MAKEFILE_DIR_LOCATION)/make-rules/clean.mk
--include $(MAKEFILE_DIR_LOCATION)/make-rules/debug.mk
--include $(MAKEFILE_DIR_LOCATION)/make-rules/memtest.mk
--include $(MAKEFILE_DIR_LOCATION)/make-rules/run.mk
--include $(MAKEFILE_DIR_LOCATION)/make-rules/tar.mk
--include $(MAKEFILE_DIR_LOCATION)/make-rules/var.mk
--include $(MAKEFILE_DIR_LOCATION)/make-rules/install.mk
--include $(MAKEFILE_DIR_LOCATION)/make-rules/uninstall.mk
--include $(MAKEFILE_DIR_LOCATION)/make-rules/cppcheck.mk
-
-###############################################################################
-# Makefile .pre_build Rules                                                   #
-###############################################################################
-include $(MAKEFILE_DIR_LOCATION)/make-rules/pre-build.mk
+-include $(shell find $(MAKEFILE_DIR_LOCATION)/make-utilities -type f -name '*.mk')
 
 
 endif # This endif is necessary - See Makefile Init
