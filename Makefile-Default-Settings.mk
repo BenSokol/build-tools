@@ -2,7 +2,7 @@
 # @Author:   Ben Sokol <Ben>
 # @Email:    ben@bensokol.com
 # @Created:  February 14th, 2019 [5:26pm]
-# @Modified: February 20th, 2019 [4:11pm]
+# @Modified: February 21st, 2019 [8:53am]
 # @Version:  1.1.0
 #
 # Copyright (C 2019 by Ben Sokol. All Rights Reserved.
@@ -15,6 +15,7 @@ OBJDIR ?= obj
 DEPDIR ?= dep
 SUBDIR ?= submodules
 LOGDIR ?= logs
+INSTALLDIR ?= ${HOME}/.bin
 
 # Flags
 CSTD ?= -std=c11
@@ -27,5 +28,4 @@ CXX ?= g++
 CC ?= gcc
 
 # Other
-INSTALL_LOCATION ?= ${HOME}/.bin
 LOG_FILE ?= make.log
