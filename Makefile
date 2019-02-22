@@ -2,7 +2,7 @@
 # @Author:   Ben Sokol
 # @Email:    ben@bensokol.com
 # @Created:  October 25th, 2018 [7:15pm]
-# @Modified: February 21st, 2019 [3:14am]
+# @Modified: February 21st, 2019 [1:48pm]
 # @Version:  5.0.0
 #
 # Copyright (C) 2018-2019 by Ben Sokol. All Rights Reserved.
@@ -42,7 +42,8 @@ endif
 ###############################################################################
 # Makefile Build Script                                                       #
 ###############################################################################
-MAKEFILE_FILES=$(strip Makefile Makefile-Settings.mk $(MAKEFILE_DIR_LOCATION)/Makefile $(shell find $(MAKEFILE_DIR_LOCATION) -type f -name '*.mk'))
+MAKEFILE_FILES = $(strip Makefile Makefile-Settings.mk $(MAKEFILE_DIR_LOCATION)/Makefile $(shell find $(MAKEFILE_DIR_LOCATION) -type f -name '*.mk'))
+CPPCHECK_FLAGS := $(strip $(CPPCHECK_FLAGS) $(CPPCHECK_DEFINES) $(CPPCHECK_SUPPRESS) $(CPPCHECK_ENABLE))
 -include $(shell find $(DEPDIR) -type f -name '*.d' 2> /dev/null)
 
 # Initalize WARNING_FLAGS based on compiler (clang vs gcc)

@@ -1,7 +1,16 @@
 # build-tools
 
-## Requirements
+## General Requirements
 -   Linux or macOS (Windows is NOT supported)
+-   gcc, clang, or a different compiler
+
+### Rule Specific Requirements
+-   cppcheck requires cppcheck
+-   debug requires gdb or lldb
+-   install requires sudo
+-   memtest requires valgrind
+-   tar requires the tar cli utility
+-   uninstall requires sudo
 
 ## Setup
 To use, create a Makefile at the project root with the following code in it:
@@ -74,8 +83,15 @@ The following options are available:
 <a name="reference-Compiler-Flags-2">2.</a> Checks if macOS usign uname. uname must return "Darwin"<br/>
 <a name="reference-Compiler-Flags-3">3.</a> Makefile automatically includs all SRCDIR/ and SUBDIR/* folders (recursively), excluding .git and MAKEFILE_DIR_LOCATION.
 
-#### Other Settings
+#### CPPCHECK Flags
+| Setting           | Default Value | Description                                                 |
+|:-----------------:|:-------------:|:----------------------------------------------------------- |
+| CPPCHECK_FLAGS    |               | General flags to pass to cppcheck                           |
+| CPPCHECK_DEFINES  |               | Define rules to pass to cppcheck (formated as -D\<value\>)  |
+| CPPCHECK_SUPPRESS |               | Warnings cppcheck should suppress                           |
+| CPPCHECK_ENABLE   |               | cppcheck checks to enable, in the format --enable=\<value\> |
 
+#### Other Settings
 | Setting           | Default Value | Description                                                                          |
 |:-----------------:|:-------------:|:------------------------------------------------------------------------------------ |
 | COMMAND_LINE_ARGS |               | Arguments to pass to executable when using rules: run, memtest, and debug.           |

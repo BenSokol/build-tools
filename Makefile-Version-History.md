@@ -55,3 +55,6 @@
 ### v5.3
 -   Move toggleable rules to make-utilities folder.
 -   Add support for logging builds to file
+
+### v5.4
+-   Add support for cppcheck flags
