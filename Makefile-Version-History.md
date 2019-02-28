@@ -58,3 +58,6 @@
 
 ### v5.4
 -   Add support for cppcheck flags
+
+### v5.5
+-   Update .PHONY install to always try to make a symbolic link, using ln -s -i for exe and manpage
