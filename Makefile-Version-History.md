@@ -61,3 +61,6 @@
 
 ### v5.5
 -   Update .PHONY install to always try to make a symbolic link, using ln -s -i for exe and manpage
+
+### v5.6
+-   Add RUN_CMD to allow variable ways to run after building

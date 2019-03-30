@@ -97,6 +97,7 @@ The following options are available:
 | COMMAND_LINE_ARGS |               | Arguments to pass to executable when using rules: run, memtest, and debug.           |
 | PREBUILD          |               | Any rules to run before the executable is built                                      |
 | ENABLE_LOGGING    |               | Logs calls to make to PROJECT_ROOT/make.log if defined to 1. Not defined by default. |
+| RUN_CMD           | ./$(EXE)      | Command used to start executable in run, memtest, and debug rules.                   |
 
 ### Disable Rules
 The following rules can be disabled by defining the variable listed in **Makefile-Settings.mk**. They can be defined to anything.

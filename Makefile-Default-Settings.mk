@@ -2,7 +2,7 @@
 # @Author:   Ben Sokol <Ben>
 # @Email:    ben@bensokol.com
 # @Created:  February 14th, 2019 [5:26pm]
-# @Modified: March 3rd, 2019 [12:36am]
+# @Modified: March 28th, 2019 [1:18pm]
 # @Version:  1.1.0
 #
 # Copyright (C 2019 by Ben Sokol. All Rights Reserved.
@@ -30,3 +30,4 @@ CC ?= gcc
 
 # Other
 LOG_FILE ?= make.log
+RUN_CMD ?= ./$(EXE)
