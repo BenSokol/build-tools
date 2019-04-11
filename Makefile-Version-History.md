@@ -64,3 +64,10 @@
 
 ### v5.6
 -   Add RUN_CMD to allow variable ways to run after building
+
+## v6.0
+-   Add new optional include at project root "Makefile-Special-Rules.mk" which can contain any special rules
+-   Add POST_BUILD flag that should be defined if a post build step is required.
+    -   A post build step should be defined under a rule named '.post_build' in Makefile-Special-Rules.mk
+-   clean will now delete .post_build if it exists
+-   Add LINKFLAGS to allow link specific flags

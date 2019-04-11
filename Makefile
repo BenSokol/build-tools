@@ -2,7 +2,7 @@
 # @Author:   Ben Sokol
 # @Email:    ben@bensokol.com
 # @Created:  October 25th, 2018 [7:15pm]
-# @Modified: February 21st, 2019 [1:48pm]
+# @Modified: April 11th, 2019 [2:56pm]
 # @Version:  5.0.0
 #
 # Copyright (C) 2018-2019 by Ben Sokol. All Rights Reserved.
@@ -42,7 +42,7 @@ endif
 ###############################################################################
 # Makefile Build Script                                                       #
 ###############################################################################
-MAKEFILE_FILES = $(strip Makefile Makefile-Settings.mk $(MAKEFILE_DIR_LOCATION)/Makefile $(shell find $(MAKEFILE_DIR_LOCATION) -type f -name '*.mk'))
+MAKEFILE_FILES = $(strip Makefile Makefile-Settings.mk Makefile-Special-Rules.mk $(MAKEFILE_DIR_LOCATION)/Makefile $(shell find $(MAKEFILE_DIR_LOCATION) -type f -name '*.mk'))
 CPPCHECK_FLAGS := $(strip $(CPPCHECK_FLAGS) $(CPPCHECK_DEFINES) $(CPPCHECK_SUPPRESS) $(CPPCHECK_ENABLE))
 -include $(shell find $(DEPDIR) -type f -name '*.d' 2> /dev/null)
 
@@ -99,5 +99,9 @@ include $(MAKEFILE_DIR_LOCATION)/make-rules/pre-build.mk
 ###############################################################################
 -include $(shell find $(MAKEFILE_DIR_LOCATION)/make-utilities -type f -name '*.mk')
 
+###############################################################################
+# Makefile Special Rules                                                      #
+###############################################################################
+-include ./Makefile-Special-Rules.mk
 
 endif # This endif is necessary - See Makefile Init
