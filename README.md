@@ -81,7 +81,7 @@ The following options are available:
 | INC                 |               | Any additional include directories to pass to CC or CXX.[<sup>3</sup>](#reference-Compiler-Flags-3)<br>Use ```-IDirectoryPath``` where DirectoryPath is the path to the directory to include. |
 
 <a name="reference-Compiler-Flags-1">1.</a> Checks if Linux using uname. uname must return "Linux"<br/>
-<a name="reference-Compiler-Flags-2">2.</a> Checks if macOS usign uname. uname must return "Darwin"<br/>
+<a name="reference-Compiler-Flags-2">2.</a> Checks if macOS using uname. uname must return "Darwin"<br/>
 <a name="reference-Compiler-Flags-3">3.</a> Makefile automatically includs all SRCDIR/ and SUBDIR/* folders (recursively), excluding .git and MAKEFILE_DIR_LOCATION.
 
 #### CPPCHECK Flags
