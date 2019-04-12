@@ -71,3 +71,6 @@
     -   A post build step should be defined under a rule named '.post_build' in Makefile-Special-Rules.mk
 -   clean will now delete .post_build if it exists
 -   Add LINKFLAGS to allow link specific flags
+
+### v6.1
+-   Add LIB to allow dynamic libraries to be included

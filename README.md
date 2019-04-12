@@ -165,7 +165,7 @@ If the project requires custom (special) rules, then define them in a file **Mak
 ```
 
 ## Example Projects
-[Multi-threaded Battleship Simulation](https://github.com/BenSokol/EECS675-Project1)
+[Multi-threaded Battleship Simulation](https://github.com/BenSokol/EECS675-Project1)  
 [OpenMPI Sales Manager](https://github.com/BenSokol/EECS675-Project2)
 
 ## Version History
