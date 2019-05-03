@@ -2,7 +2,7 @@
 # @Author:   Ben Sokol
 # @Email:    ben@bensokol.com
 # @Created:  October 25th, 2018 [7:15pm]
-# @Modified: April 11th, 2019 [2:56pm]
+# @Modified: May 3rd, 2019 [6:39pm]
 # @Version:  5.0.0
 #
 # Copyright (C) 2018-2019 by Ben Sokol. All Rights Reserved.
@@ -68,6 +68,12 @@ endif
 
 # Set include paths, allows inclusion of filenames without paths
 INC += $(strip $(addprefix -I, $(shell find $(SRCDIR) $(SUBDIR) -type d -not -path "*.git*" -not -path "$(MAKEFILE_DIR_LOCATION)*" -print)))
+
+ifeq ($(LDFLAGS),)
+LDFLAGS := $(strip $(CXXSTD) $(CXXFLAGS) $(WARNING_FLAGS) $(INC))
+else
+LDFLAGS := $(strip $(LDFLAGS) $(WARNING_FLAGS) $(INC))
+endif
 
 CFLAGS   := $(strip $(CSTD) $(CFLAGS) $(WARNING_FLAGS) $(INC))
 CXXFLAGS := $(strip $(CXXSTD) $(CXXFLAGS) $(WARNING_FLAGS) $(INC))
