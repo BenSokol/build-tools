@@ -2,7 +2,7 @@
 # @Author:   Ben Sokol
 # @Email:    ben@bensokol.com
 # @Created:  October 25th, 2018 [7:15pm]
-# @Modified: May 3rd, 2019 [7:00pm]
+# @Modified: May 3rd, 2019 [9:26pm]
 # @Version:  5.0.0
 #
 # Copyright (C) 2018-2019 by Ben Sokol. All Rights Reserved.
@@ -84,11 +84,15 @@ CSOURCES += $(shell find $(SUBDIR) -type f -name '*.c')
 CPPSOURCES := $(shell find $(SRCDIR) -type f -name '*.cpp')
 CPPSOURCES += $(shell find $(SUBDIR) -type f -name '*.cpp')
 
-COBJECTS = $(patsubst %.c,$(OBJDIR)/%.o,$(CSOURCES))
-CPPOBJECTS += $(patsubst %.cpp,$(OBJDIR)/%.o,$(CPPSOURCES))
+CUDASOURCES := $(shell find $(SRCDIR) -type f -name '*.cu')
+CUDASOURCES += $(shell find $(SUBDIR) -type f -name '*.cu')
 
-SOURCES = $(strip $(CSOURCES) $(CPPSOURCES))
-OBJECTS = $(strip $(COBJECTS) $(CPPOBJECTS))
+COBJECTS += $(patsubst %.c,$(OBJDIR)/%.o,$(CSOURCES))
+CPPOBJECTS += $(patsubst %.cpp,$(OBJDIR)/%.o,$(CPPSOURCES))
+CUDAOBJECTS += $(patsubst %.cu,$(OBJDIR)/%.o,$(CUDASOURCES))
+
+SOURCES = $(strip $(CSOURCES) $(CPPSOURCES) $(CUDASOURCES))
+OBJECTS = $(strip $(COBJECTS) $(CPPOBJECTS) $(CUDAOBJECTS))
 
 
 ###############################################################################
