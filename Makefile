@@ -2,7 +2,7 @@
 # @Author:   Ben Sokol
 # @Email:    ben@bensokol.com
 # @Created:  October 25th, 2018 [7:15pm]
-# @Modified: May 3rd, 2019 [9:26pm]
+# @Modified: October 2nd, 2019 [9:06pm]
 # @Version:  5.0.0
 #
 # Copyright (C) 2018-2019 by Ben Sokol. All Rights Reserved.
@@ -36,6 +36,8 @@ include $(MAKEFILE_DIR_LOCATION)/Makefile-Default-Settings.mk
 ifndef ECHOCOUNT
 ifeq ($(ENABLE_LOGGING),1)
 $(shell printf "$(shell date) - make $(MAKECMDGOALS)\n" >> $(LOG_FILE))
+else
+$(shell if [[ -e $(LOG_FILE) ]]; then rm $(LOG_FILE); fi)
 endif
 endif
 
