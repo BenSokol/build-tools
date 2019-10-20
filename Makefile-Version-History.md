@@ -74,3 +74,20 @@
 
 ### v6.1
 -   Add LIB to allow dynamic libraries to be included
+
+### v6.2
+-   Add LDFLAGS to allow
+-   Add option for custom build (disabled default wildcard/link rules), just set CUSTOMBUILD to any value
+-   Delete make.log if logging is disabled
+
+## v7.0
+-   MAJOR REFACTOR OF ENTIRE BUILD SYSTEM
+    -   If upgrading from old version, requires running make clean then re-running make with specified target
+-   Remove support for cuda files
+-   Add support for build types (release, dev, debug, test)
+    -   Build type dev, release, and debug only differ by flags
+    -   Build type test generates seperate executable named $(EXE)-test, or defined by $(TESTEXE)
+        -   Requires file with the function main to be specified in the variable MAIN_FILE if not main.c/cpp
+        -   Supports additional flags by TEST_FLAGS, defaults to -DMOD_TEST -DTEST
+    -   Build of each type get compiled seperately in $(OBJDIR)/dev, etc. folders
+    -   Builds are compiled in $(BINDIR) with the type appended to binary name, then the current build is linked to project root

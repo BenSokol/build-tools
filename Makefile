@@ -2,7 +2,7 @@
 # @Author:   Ben Sokol
 # @Email:    ben@bensokol.com
 # @Created:  October 25th, 2018 [7:15pm]
-# @Modified: October 2nd, 2019 [10:59pm]
+# @Modified: October 20th, 2019 [3:07am]
 # @Version:  5.0.0
 #
 # Copyright (C) 2018-2019 by Ben Sokol. All Rights Reserved.
@@ -15,7 +15,7 @@ endif
 # Makefile Init (DO NOT EDIT)                                                 #
 ###############################################################################
 ifneq ($(words $(MAKECMDGOALS)),1) # if no argument was given to make...
-.DEFAULT_GOAL = build
+.DEFAULT_GOAL = dev
 %:
 	@$(MAKE) $@ --no-print-directory -rf Makefile
 else
@@ -44,7 +44,7 @@ endif
 ###############################################################################
 # Makefile Build Script                                                       #
 ###############################################################################
-MAKEFILE_FILES = $(strip Makefile Makefile-Settings.mk Makefile-Special-Rules.mk $(MAKEFILE_DIR_LOCATION)/Makefile $(shell find $(MAKEFILE_DIR_LOCATION) -type f -name '*.mk'))
+MAKEFILE_FILES = $(strip Makefile $(shell if [ -f "Makefile-Settings.mk" ]; then printf "Makefile-Settings.mk"; fi) $(shell if [ -f "Makefile-Special-Rules.mk" ]; then printf "Makefile-Special-Rules.mk"; fi) $(MAKEFILE_DIR_LOCATION)/Makefile $(shell find $(MAKEFILE_DIR_LOCATION) -type f -name '*.mk'))
 CPPCHECK_FLAGS := $(strip $(CPPCHECK_FLAGS) $(CPPCHECK_DEFINES) $(CPPCHECK_SUPPRESS) $(CPPCHECK_ENABLE))
 -include $(shell find $(DEPDIR) -type f -name '*.d' 2> /dev/null)
 
@@ -86,25 +86,89 @@ CSOURCES += $(shell find $(SUBDIR) -type f -name '*.c')
 CPPSOURCES := $(shell find $(SRCDIR) -type f -name '*.cpp')
 CPPSOURCES += $(shell find $(SUBDIR) -type f -name '*.cpp')
 
-CUDASOURCES := $(shell find $(SRCDIR) -type f -name '*.cu')
-CUDASOURCES += $(shell find $(SUBDIR) -type f -name '*.cu')
-
 COBJECTS += $(patsubst %.c,$(OBJDIR)/%.o,$(CSOURCES))
 CPPOBJECTS += $(patsubst %.cpp,$(OBJDIR)/%.o,$(CPPSOURCES))
-CUDAOBJECTS += $(patsubst %.cu,$(OBJDIR)/%.o,$(CUDASOURCES))
 
-SOURCES = $(strip $(CSOURCES) $(CPPSOURCES) $(CUDASOURCES))
-OBJECTS = $(strip $(COBJECTS) $(CPPOBJECTS) $(CUDAOBJECTS))
+SOURCES = $(strip $(CSOURCES) $(CPPSOURCES))
+OBJECTS = $(strip $(COBJECTS) $(CPPOBJECTS))
 
+###############################################################################
+# Makefile Release Rules                                                      #
+###############################################################################
+RELEASELDFLAGS  := $(strip $(LDFLAGS) $(RELEASEFLAGS))
+RELEASECFLAGS   := $(strip $(CFLAGS) $(RELEASEFLAGS))
+RELEASECXXFLAGS := $(strip $(CXXFLAGS) $(RELEASEFLAGS))
+RELEASEOBJECTS := $(strip $(patsubst $(OBJDIR)/%,$(OBJDIR)/release/%,$(OBJECTS)))
+
+###############################################################################
+# Makefile Dev Rules                                                          #
+###############################################################################
+DEVLDFLAGS  := $(strip $(LDFLAGS) $(DEVFLAGS))
+DEVCFLAGS   := $(strip $(CFLAGS) $(DEVFLAGS))
+DEVCXXFLAGS := $(strip $(CXXFLAGS) $(DEVFLAGS))
+DEVOBJECTS := $(strip $(patsubst $(OBJDIR)/%,$(OBJDIR)/dev/%,$(OBJECTS)))
+
+###############################################################################
+# Makefile Debug Rules                                                        #
+###############################################################################
+DEBUGLDFLAGS  := $(strip $(LDFLAGS) $(DEBUGFLAGS))
+DEBUGCFLAGS   := $(strip $(CFLAGS) $(DEBUGFLAGS))
+DEBUGCXXFLAGS := $(strip $(CXXFLAGS) $(DEBUGFLAGS))
+DEBUGOBJECTS := $(strip $(patsubst $(OBJDIR)/%,$(OBJDIR)/debug/%,$(OBJECTS)))
+
+###############################################################################
+# Makefile Test Rules                                                         #
+###############################################################################
+ifndef MAKEFILE_RULE_TEST_DISABLE
+TESTINC += $(strip $(INC) $(addprefix -I, $(shell find $(TESTDIR) -type d -not -path "*.git*" -print)))
+
+TESTLDFLAGS  := $(strip $(filter-out -DNDEBUG, $(LDFLAGS)) $(TESTFLAGS))
+TESTCFLAGS   := $(strip $(filter-out -DNDEBUG, $(CFLAGS)) $(TESTFLAGS))
+TESTCXXFLAGS := $(strip $(filter-out -DNDEBUG, $(CXXFLAGS)) $(TESTFLAGS))
+
+TESTCSOURCES += $(shell find $(TESTDIR) -type f -name '*.c')
+TESTCPPSOURCES += $(shell find $(TESTDIR) -type f -name '*.cpp')
+
+TESTCOBJECTS += $(patsubst %.c,$(OBJDIR)/%.o, $(TESTCSOURCES))
+TESTCPPOBJECTS += $(patsubst %.cpp,$(OBJDIR)/%.o, $(TESTCPPSOURCES))
+
+TESTSOURCES := $(SOURCES) $(TESTCSOURCES) $(TESTCPPSOURCES)
+TESTOBJECTS := $(OBJECTS) $(TESTCOBJECTS) $(TESTCPPOBJECTS)
+
+TESTSOURCES := $(filter-out $(MAIN_FILE), $(TESTSOURCES))
+TESTOBJECTS := $(filter-out $(patsubst %.cpp,$(OBJDIR)/%.o,$(MAIN_FILE)), $(TESTOBJECTS))
+
+TESTSOURCES := $(strip $(TESTSOURCES))
+TESTOBJECTS := $(strip $(patsubst $(OBJDIR)/%,$(OBJDIR)/test/%,$(TESTOBJECTS)))
+endif
 
 ###############################################################################
 # Makefile Build Rules                                                        #
 ###############################################################################
-include $(MAKEFILE_DIR_LOCATION)/make-rules/build.mk
-include $(MAKEFILE_DIR_LOCATION)/make-rules/link.mk
-include $(MAKEFILE_DIR_LOCATION)/make-rules/wildcard/c.mk
-include $(MAKEFILE_DIR_LOCATION)/make-rules/wildcard/cpp.mk
-include $(MAKEFILE_DIR_LOCATION)/make-rules/pre-build.mk
+
+include $(MAKEFILE_DIR_LOCATION)/release/release.mk
+include $(MAKEFILE_DIR_LOCATION)/release/link.mk
+include $(MAKEFILE_DIR_LOCATION)/release/wildcard/c.mk
+include $(MAKEFILE_DIR_LOCATION)/release/wildcard/cpp.mk
+
+include $(MAKEFILE_DIR_LOCATION)/dev/dev.mk
+include $(MAKEFILE_DIR_LOCATION)/dev/link.mk
+include $(MAKEFILE_DIR_LOCATION)/dev/wildcard/c.mk
+include $(MAKEFILE_DIR_LOCATION)/dev/wildcard/cpp.mk
+
+include $(MAKEFILE_DIR_LOCATION)/debug/debug.mk
+include $(MAKEFILE_DIR_LOCATION)/debug/link.mk
+include $(MAKEFILE_DIR_LOCATION)/debug/wildcard/c.mk
+include $(MAKEFILE_DIR_LOCATION)/debug/wildcard/cpp.mk
+
+ifndef MAKEFILE_RULE_TEST_DISABLE
+include $(MAKEFILE_DIR_LOCATION)/test/test.mk
+include $(MAKEFILE_DIR_LOCATION)/test/link.mk
+include $(MAKEFILE_DIR_LOCATION)/test/wildcard/c.mk
+include $(MAKEFILE_DIR_LOCATION)/test/wildcard/cpp.mk
+endif
+
+include $(MAKEFILE_DIR_LOCATION)/pre-build/pre-build.mk
 
 ###############################################################################
 # Makefile Other Rules                                                        #
