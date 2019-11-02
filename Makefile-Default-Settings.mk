@@ -2,7 +2,7 @@
 # @Author:   Ben Sokol <Ben>
 # @Email:    ben@bensokol.com
 # @Created:  February 14th, 2019 [5:26pm]
-# @Modified: October 20th, 2019 [3:02am]
+# @Modified: November 1st, 2019 [7:06pm]
 # @Version:  1.1.0
 #
 # Copyright (C 2019 by Ben Sokol. All Rights Reserved.
@@ -30,7 +30,7 @@ WARNING_FLAGS ?= -Wall
 RELEASEFLAGS ?= -O3 -DNDEBUG -DRELEASE_BUILD
 DEVFLAGS ?= -O1 -DDEV_BUILD
 DEBUGFLAGS ?= -Og -g -DDEBUG -D_DEBUG -DDEBUG_BUILD
-TESTFLAGS ?= -Og -DMOD_TEST
+TESTFLAGS ?= -Og -g -DUNIT_TEST -DTEST_BUILD
 
 # Executables
 DEBUGGER ?= gdb

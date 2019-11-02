@@ -113,7 +113,7 @@ The following options are available:
 | RELEASEFLAGS        | -O3 -DNDEBUG -DRELEASE_BUILD          | Flags to be used in addition to flags in table above for release builds.  |
 | DEVFLAGS            | -O1 -DDEV_BUILD                       | Flags to be used in addition to flags in table above for dev builds.      |
 | DEBUGFLAGS          | -Og -g -DDEBUG -D_DEBUG -DDEBUG_BUILD | Flags to be used in addition to flags in table above for debug builds.    |
-| TESTFLAGS           | -Og -DMOD_TEST                        | Flags to be used in addition to flags in table above for test builds.     |
+| TESTFLAGS           | -Og -g -DMOD_TEST                     | Flags to be used in addition to flags in table above for test builds.     |
 
 #### CPPCHECK Flags
 | Setting           | Default Value | Description                                                 |

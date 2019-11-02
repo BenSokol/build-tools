@@ -91,3 +91,7 @@
         -   Supports additional flags by TEST_FLAGS, defaults to -DMOD_TEST -DTEST
     -   Build of each type get compiled seperately in $(OBJDIR)/dev, etc. folders
     -   Builds are compiled in $(BINDIR) with the type appended to binary name, then the current build is linked to project root
+
+### v7.1
+-   Add -g to default test flags
+-   Fix TESTEXE so it can be overridden
