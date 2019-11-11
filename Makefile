@@ -2,7 +2,7 @@
 # @Author:   Ben Sokol
 # @Email:    ben@bensokol.com
 # @Created:  October 25th, 2018 [7:15pm]
-# @Modified: October 20th, 2019 [3:07am]
+# @Modified: October 21st, 2019 [2:50pm]
 # @Version:  5.0.0
 #
 # Copyright (C) 2018-2019 by Ben Sokol. All Rights Reserved.
@@ -120,14 +120,15 @@ DEBUGOBJECTS := $(strip $(patsubst $(OBJDIR)/%,$(OBJDIR)/debug/%,$(OBJECTS)))
 # Makefile Test Rules                                                         #
 ###############################################################################
 ifndef MAKEFILE_RULE_TEST_DISABLE
+
 TESTINC += $(strip $(INC) $(addprefix -I, $(shell find $(TESTDIR) -type d -not -path "*.git*" -print)))
+TESTCSOURCES += $(shell find $(TESTDIR) -type f -name '*.c')
+TESTCPPSOURCES += $(shell find $(TESTDIR) -type f -name '*.cpp')
 
 TESTLDFLAGS  := $(strip $(filter-out -DNDEBUG, $(LDFLAGS)) $(TESTFLAGS))
 TESTCFLAGS   := $(strip $(filter-out -DNDEBUG, $(CFLAGS)) $(TESTFLAGS))
 TESTCXXFLAGS := $(strip $(filter-out -DNDEBUG, $(CXXFLAGS)) $(TESTFLAGS))
 
-TESTCSOURCES += $(shell find $(TESTDIR) -type f -name '*.c')
-TESTCPPSOURCES += $(shell find $(TESTDIR) -type f -name '*.cpp')
 
 TESTCOBJECTS += $(patsubst %.c,$(OBJDIR)/%.o, $(TESTCSOURCES))
 TESTCPPOBJECTS += $(patsubst %.cpp,$(OBJDIR)/%.o, $(TESTCPPSOURCES))
