@@ -9,13 +9,13 @@ This project is a build script for C and C++ that uses GNU Make as its backend.
 -   No modification needed when adding a new file to a project
 
 ## General Requirements
--   Linux or macOS (Windows is NOT supported)
+-   Linux, macOS, or Windows
 -   gcc, clang, or a different compiler
 
 ### Rule Specific Requirements
 -   cppcheck requires cppcheck
 -   debugger requires gdb or lldb
--   install requires sudo
+-   install requires sudo on linux/macos
 -   memtest requires valgrind
 -   tar requires the tar cli utility
 -   uninstall requires sudo

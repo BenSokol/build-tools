@@ -2,10 +2,10 @@
 # @Author:   Ben Sokol
 # @Email:    ben@bensokol.com
 # @Created:  October 25th, 2018 [7:15pm]
-# @Modified: October 21st, 2019 [2:50pm]
-# @Version:  5.0.0
+# @Modified: February 21st, 2020 [10:31am]
+# @Version:  7.2.0
 #
-# Copyright (C) 2018-2019 by Ben Sokol. All Rights Reserved.
+# Copyright (C) 2018-2020 by Ben Sokol. All Rights Reserved.
 
 ifndef MAKEFILE_DIR_LOCATION
 $(error MAKEFILE_DIR_LOCATION is not defined. For help, see README.md)
@@ -55,7 +55,7 @@ WARNING_FLAGS := $(strip $(WARNING_FLAGS) $(WARNING_FLAGS_CLANG))
 else ifneq (,$(findstring g++,$(patsubst %g++%,g++,$(COMPILER_HELP))))
 WARNING_FLAGS := $(strip $(WARNING_FLAGS) $(WARNING_FLAGS_GCC))
 else
-$(warning $(shell echo "\033[35m")WARNING$(shell echo "\033[39m"): Unknown Compiler. Supported compilers: g++, clang.)
+$(warning $(shell echo "\033[35m")WARNING$(shell echo "\033[39m"): Unknown Compiler ($(COMPILER_HELP)). Supported compilers: g++, clang.)
 endif
 
 # Disable compiler specific warnings (unable to fix because they are caused by flex/bison generated files)
@@ -64,6 +64,8 @@ WARNING_FLAGS += $(MACOS_FLAGS)
 DEBUGGER = lldb # macos doesnt have gdb, so must use lldb
 else ifeq ($(shell uname),Linux)
 WARNING_FLAGS += $(LINUX_FLAGS)
+else ifneq (,$(findstring NT,$(shell uname)))
+WARNING_FLAGS += $(WINDOWS_FLAGS)
 else
 $(warning $(shell echo "\033[35m")WARNING$(shell echo "\033[39m"): Unknown Operating System '$(shell uname)'.)
 endif
